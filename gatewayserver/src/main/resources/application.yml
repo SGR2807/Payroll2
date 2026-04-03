@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: "gatewayserver"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseService: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      probes:
+        enabled: true
+      show-details: always
+springdoc:
+  swagger-ui:
+    urls:
+      - name: Employee Service
+        url: /employee/v3/api-docs
+      - name: Leave Service
+        url: /leave/v3/api-docs
+      - name: Payroll Service
+        url: /payroll/v3/api-docs
+
+info:
+  app:
+    name: "Gateway Server"
+    description: "Routing server for my application"
+    version: "1.0.0"

@@ -1,0 +1,70 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: "leave"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  profiles:
+    active: "prod"
+  devtools:
+    livereload:
+      reload: true
+    restart:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/leavedb
+    driverClassName: org.postgresql.Driver
+    username: payroll
+    password: payroll123
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  sql:
+    init:
+      mode: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      probes:
+        enabled: true
+      show-details: always
+
+
+endpoints:
+  shutdown:
+    enabled: true
+
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: "http://localhost:8070/eureka/"
+
+
+info:
+  app:
+    name: "Leave Microservice"
+    description: "Leave Microservice for Payroll Services"
+    version: "1.0.0"

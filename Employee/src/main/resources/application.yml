@@ -1,0 +1,69 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: "employee"
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/employeedb
+    driverClassName: org.postgresql.Driver
+    username: payroll
+    password: payroll123
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  sql:
+    init:
+      mode: never
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: "http://localhost:8070/eureka/"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+
+info:
+  app:
+    name: "Employee Microservice"
+    description: "Employee Management Service for Payroll System"
+    version: "1.0.0"
+
+keycloak:
+  admin:
+    server-url: "http://localhost:7080"
+    realm: "master"
+    username: "admin"
+    password: "admin"
+    target-realm: "master"
+    default-password: "changeme123"
+
